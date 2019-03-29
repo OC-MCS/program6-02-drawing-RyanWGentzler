@@ -21,9 +21,12 @@ private:
 	CircleShape greenBtn;	//CircleShape is a Graphics lib class
 	CircleShape circleBtn;	//CircleShape is a Graphics lib class
 	RectangleShape squareBtn; // RectangleShape is Graphics lib class
+	SettingsMgr *mgr;
 public:
 	SettingsUI(SettingsMgr *mgr)
 	{
+		this->mgr = mgr;
+
 		Vector2f bbpos(60, 70);
 		blueBtn.setPosition(bbpos);
 		blueBtn.setRadius(10);
@@ -57,47 +60,26 @@ public:
 		squareBtn.setOutlineColor(Color::White);
 		squareBtn.setOutlineThickness(2);
 		squareBtn.setSize(Vector2f(20, 20));
-
-		if (mgr->getCurColor == (Color::Blue))
-		{
-			blueBtn.setFillColor(Color::Blue);
-			redBtn.setFillColor(Color::Transparent);
-			greenBtn.setFillColor(Color::Transparent);
-		}
-		else if (mgr->getCurColor == Color::Red)
-		{
-			blueBtn.setFillColor(Color::Transparent);
-			redBtn.setFillColor(Color::Red);
-			greenBtn.setFillColor(Color::Transparent);
-		}
-		else if (mgr->getCurColor == Color::Green)
-		{
-			blueBtn.setFillColor(Color::Transparent);
-			redBtn.setFillColor(Color::Transparent);
-			greenBtn.setFillColor(Color::Green);
-		}
-
-		if (mgr->getCurShape == CIRCLE)
-		{
-			circleBtn.setFillColor(Color::White);
-			squareBtn.setFillColor(Color::Transparent);
-		}
-		else if (mgr->getCurShape == SQUARE)
-		{
-			squareBtn.setFillColor(Color::White);
-			circleBtn.setFillColor(Color::Transparent);
-		}
 	}
 	void handleMouseUp(Vector2f mouse)
 	{
-
+		if (redBtn.getGlobalBounds().contains(mouse))
+		{mgr->setColor(Color::Red);}
+		else if (blueBtn.getGlobalBounds().contains(mouse))
+			mgr->setColor(Color::Blue);
+		else if (greenBtn.getGlobalBounds().contains(mouse))
+			mgr->setColor(Color::Green);
+		else if (circleBtn.getGlobalBounds().contains(mouse))
+			mgr->setShape(CIRCLE);
+		else if (squareBtn.getGlobalBounds().contains(mouse))
+			mgr->setShape(SQUARE);	
 	}
 
 	void draw(RenderWindow& win)
 	{
 
 		Font font;
-		if (!font.loadFromFile("C:\\Windows\\Fonts\\arial.ttf"))
+		if (!font.loadFromFile("C:\\Windows\\Fonts\\comic.ttf"))
 			die("couldn't load font");
 
 		// title
@@ -108,6 +90,36 @@ public:
 		Text subtitle("Selected Shape", font, 15);
 		subtitle.setPosition(20, 200);
 		win.draw(subtitle);
+
+		if (mgr->getCurColor() == (Color::Blue))
+		{
+			blueBtn.setFillColor(Color::Blue);
+			redBtn.setFillColor(Color::Transparent);
+			greenBtn.setFillColor(Color::Transparent);
+		}
+		else if (mgr->getCurColor() == Color::Red)
+		{
+			blueBtn.setFillColor(Color::Transparent);
+			redBtn.setFillColor(Color::Red);
+			greenBtn.setFillColor(Color::Transparent);
+		}
+		else if (mgr->getCurColor() == Color::Green)
+		{
+			blueBtn.setFillColor(Color::Transparent);
+			redBtn.setFillColor(Color::Transparent);
+			greenBtn.setFillColor(Color::Green);
+		}
+
+		if (mgr->getCurShape() == CIRCLE)
+		{
+			circleBtn.setFillColor(Color::White);
+			squareBtn.setFillColor(Color::Transparent);
+		}
+		else if (mgr->getCurShape() == SQUARE)
+		{
+			squareBtn.setFillColor(Color::White);
+			circleBtn.setFillColor(Color::Transparent);
+		}
 
 		win.draw(blueBtn);
 
