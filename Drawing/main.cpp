@@ -1,5 +1,5 @@
 //================================================
-// YOUR NAME GOES HERE <-----------------  
+// Ryan Gentzler
 //================================================
 #include <iostream>
 #include <fstream>
@@ -10,10 +10,6 @@ using namespace std;
 #include "SettingsUI.h"
 #include "DrawingUI.h"
 using namespace sf;
-
-// Finish this code. Other than where it has comments telling you to 
-// add code, you shouldn't need to add any logic to main to satisfy
-// the requirements of this programming assignment
 
 int main()
 {
