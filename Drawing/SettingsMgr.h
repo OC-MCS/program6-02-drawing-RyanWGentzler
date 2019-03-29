@@ -40,4 +40,17 @@ public:
 		return shape;
 	}
 
+	//reads the data from the file
+	void readData(fstream& file)
+	{
+		file.read(reinterpret_cast<char*>(&color), sizeof(color));
+		file.read(reinterpret_cast<char*>(&shape), sizeof(shape));
+	}
+
+	//writes the data from the file
+	void writeData(fstream& file)
+	{
+		file.write(reinterpret_cast<char*>(&color), sizeof(color));
+		file.write(reinterpret_cast<char*>(&shape), sizeof(shape));
+	}
 };

@@ -7,19 +7,18 @@ using namespace sf;
 
 struct toFile
 {
-
+	Vector2f pos;
+	ShapeEnum shape;
+	Color color;
 };
 
 // DrawingShape should be an abstract base class 
 // for Circle and Square
 class DrawingShape 
 {
-private:
-	Vector2f pos;
-	Color color;
 public:
-	virtual void draw();
-	virtual toFile getFileRecord();
+	virtual void draw(RenderWindow&) = 0;
+	virtual toFile getFileRecord() = 0;
 };
 
 class Circle : public DrawingShape
@@ -27,19 +26,51 @@ class Circle : public DrawingShape
 private:
 	CircleShape shp;
 public:
-	Circle(int);
-	void draw();
-	toFile getFileRecord();
+	Circle(Vector2f pos, Color color)
+	{
+		shp.setPosition(pos);
+		shp.setFillColor(color);
+		shp.setRadius(10);
+	}
+	void draw(RenderWindow& win)
+	{
+		win.draw(shp);
+	}
+	//returns an easy to access version of a circle
+	toFile getFileRecord() 
+	{
+		toFile temp;
+		temp.pos = shp.getPosition();
+		temp.color = shp.getFillColor();
+		temp.shape = CIRCLE;
+		return temp;
+	}
 };
-// add Circle, Square classes below. These are derived from DrawingShape
+
 class Square : public DrawingShape
 {
 private:
 	RectangleShape shp;
 public:
-	Square(Vector2f);
-	void draw();
-	toFile getFileRecord();
+	Square(Vector2f pos, Color color)
+	{
+		shp.setPosition(pos);
+		shp.setFillColor(color);
+		shp.setSize(Vector2f(20, 20));
+	}
+	void draw(RenderWindow& win)
+	{
+		win.draw(shp);
+	}
+	//returns an easy to access version of a square
+	toFile getFileRecord()
+	{
+		toFile temp;
+		temp.pos = shp.getPosition();
+		temp.color = shp.getFillColor();
+		temp.shape = SQUARE;
+		return temp;
+	}
 };
 
 
